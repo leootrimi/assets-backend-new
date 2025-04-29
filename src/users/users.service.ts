@@ -1,4 +1,4 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Body, Injectable, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Users } from './schema/users.schema';
@@ -16,7 +16,15 @@ export class UsersService {
         return users
     }
 
-    async create(@Body() createUserDto: CreateUserDto): Promise<Users> {
+    async create(createUserDto: CreateUserDto): Promise<Users> {
         return await this.usersModel.create(createUserDto);
+    }
+
+    async delete(id: string) {
+        return await this.usersModel.findByIdAndDelete(id)
+    }
+
+    async update(id: string, createUserDto: CreateUserDto) {
+        return await this.usersModel.updateOne({_id: id}, createUserDto)
     }
 }
