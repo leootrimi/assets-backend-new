@@ -15,7 +15,7 @@ export class EquipmentsService {
         return await this.equipmentsModel.create(equipment)
     }
 
-    async findAll() {
+    async findAll(): Promise<Equipments[]> {
         return await this.equipmentsModel.find();
     }
 }
