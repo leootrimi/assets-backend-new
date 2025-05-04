@@ -27,4 +27,8 @@ export class UsersService {
     async update(id: string, createUserDto: CreateUserDto) {
         return await this.usersModel.updateOne({_id: id}, createUserDto)
     }
+
+    async findById(id: string) {
+        return await this.usersModel.findById(id)
+    }
 }
