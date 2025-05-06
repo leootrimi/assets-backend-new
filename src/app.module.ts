@@ -6,6 +6,7 @@ import { EquipmentsModule } from './equipments/equipments.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
+import { CalendarModule } from './calendar/calendar.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 
 @Module({
@@ -17,7 +18,8 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
       isGlobal: true
     }),
     MongooseModule.forRoot(process.env.MONGO_URI!),
-    AuthModule
+    AuthModule,
+    CalendarModule
     ],
   controllers: [AppController],
   providers: [AppService],
