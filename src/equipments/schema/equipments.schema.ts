@@ -10,6 +10,18 @@ export class AssignedTo {
 }
 
 @Schema()
+export class Activity {
+    @Prop({ required: true })
+    user: string;
+
+    @Prop({ required: true })
+    activity: string;
+
+    @Prop({ required: true, default: Date.now })
+    date: Date;
+}
+
+@Schema({ timestamps: true })
 export class Equipments {
     @Prop()
     name: string;
@@ -31,6 +43,9 @@ export class Equipments {
 
     @Prop()
     assignedDate: string;
+
+    @Prop({ type: [Activity], default: [] })
+    activity: Activity[];
 }
 
 export const EquipmentsSchema = SchemaFactory.createForClass(Equipments);
