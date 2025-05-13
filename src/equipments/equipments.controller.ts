@@ -1,19 +1,20 @@
-import { Controller, Get, Post, Body, UseGuards, Param, NotFoundException, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Param, NotFoundException, Put, Req } from '@nestjs/common';
 import { EquipmentsService } from './equipments.service';
 import { EquipmentsDto } from './dto/equipments.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AssignedToDto } from './dto/assignedTo.dto';
+import { log } from 'console';
 
 @Controller('equipments')
 export class EquipmentsController {
     constructor(private readonly equipmentService: EquipmentsService) {}
 
     @Post()
-    create(@Body() equipment: EquipmentsDto) {
-        return this.equipmentService.create(equipment);
+    create(@Body() equipment: EquipmentsDto, @Req() req: any) {
+        return this.equipmentService.create(equipment, req.user);
     }
 
-    // @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'))
     @Get()
     findAll() {
         return this.equipmentService.findAll()
@@ -29,7 +30,11 @@ export class EquipmentsController {
     }
 
     @Put('/:id')
-    updateAssigne(@Param('id') id: string, @Body() newAssigne: AssignedToDto) {
-        return this.equipmentService.updateAssigne(id, newAssigne);
+    updateAssigne(
+        @Param('id') id: string,
+        @Body() newAssigne: AssignedToDto,
+        @Req() req: any
+        ) {
+        return this.equipmentService.updateAssigne(id, newAssigne, req.user);
     }
 }

@@ -12,9 +12,9 @@ export class EquipmentsService {
         private equipmentsModel: Model<Equipments>
     ) {}
 
-    async create(equipment: EquipmentsDto): Promise<Equipments> {
+    async create(equipment: EquipmentsDto, user: any): Promise<Equipments> {
         const activity = {
-            user: 'John Doe',
+            user: user?.name || 'Unknown user',
             activity: 'Created equipment details',
             date: new Date(),
         };
@@ -33,9 +33,9 @@ export class EquipmentsService {
         return await this.equipmentsModel.findOne({ _id: id });
     }
     
-    async updateAssigne(id: string, assign: AssignedToDto) {
+    async updateAssigne(id: string, assign: AssignedToDto, user: any) {
         const activity = {
-            user: 'John Doe',
+            user: user?.name || 'Unknown user',
             activity: 'Updated equipment details',
             date: new Date(),
         };
