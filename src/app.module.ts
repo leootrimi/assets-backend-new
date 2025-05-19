@@ -8,6 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { CalendarModule } from './calendar/calendar.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
     }),
     MongooseModule.forRoot(process.env.MONGO_URI!),
     AuthModule,
-    CalendarModule
+    CalendarModule,
+    ProjectsModule
     ],
   controllers: [AppController],
   providers: [AppService],
