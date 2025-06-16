@@ -3,17 +3,20 @@ import { ProjectsDto } from './dto/projects.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Projects } from './schema/projects.schema';
 import { Model } from 'mongoose';
+import { Auth0Utility } from 'src/utility/Auth0Utility';
 
 @Injectable()
 export class ProjectsService {
 
     constructor(
         @InjectModel(Projects.name)
-        private projectsModel: Model<Projects>
+        private projectsModel: Model<Projects>,
+        private readonly auth0Utility: Auth0Utility
     ) {}
 
-    async create(project: ProjectsDto): Promise<Projects> {
-        return await this.projectsModel.create(project);
+    async create(project: ProjectsDto) {
+        // return await this.projectsModel.create(project);
+        return await this.auth0Utility.createOgranization(project)
     }
 
     async find(): Promise<Projects[]> {

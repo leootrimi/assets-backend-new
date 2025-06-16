@@ -12,7 +12,7 @@ export class UserCheckinInfo {
 @Schema()
 export class UserCheckin {
 
-    @Prop()
+    @Prop({ type: UserCheckinInfo})
     user: UserCheckinInfo
 
     @Prop()

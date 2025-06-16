@@ -10,6 +10,7 @@ import { CalendarModule } from './calendar/calendar.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { ProjectsModule } from './projects/projects.module';
 import { UsersCheckinModule } from './users-checkin/users-checkin.module';
+import { ApiRequest } from './utility/ApiRequest';
 
 @Module({
   imports: [

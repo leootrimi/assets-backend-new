@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Equipments } from './schema/equipments.schema';
 import { Model } from 'mongoose';
 import { AssignedToDto } from './dto/assignedTo.dto';
+import { log } from 'console';
 
 @Injectable()
 export class EquipmentsService {
@@ -47,5 +48,23 @@ export class EquipmentsService {
                 $push: { activity: activity },
             }
         );
+    }
+
+    async getEquipmentsForEmployer(request: any) {
+        console.log('id', request.user.sub);
+        console.log('assignedTo.fullName', request.user.name);
+        
+        try {
+            const equipments = await this.equipmentsModel.find({
+                'assignedTo.id': request.user.sub,
+                'assignedTo.fullName': request.user.name
+            })
+            .select('name type tag serialNo assignedDate')
+            console.log('equipments', equipments);
+            return equipments
+        } catch (error) {
+            console.log(error);
+            
+        }
     }
 }
