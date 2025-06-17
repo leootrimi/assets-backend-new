@@ -11,6 +11,7 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 import { ProjectsModule } from './projects/projects.module';
 import { UsersCheckinModule } from './users-checkin/users-checkin.module';
 import { ApiRequest } from './utility/ApiRequest';
+import { HolidaysModule } from './holidays/holidays.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { ApiRequest } from './utility/ApiRequest';
     AuthModule,
     CalendarModule,
     ProjectsModule,
-    UsersCheckinModule
+    UsersCheckinModule,
+    HolidaysModule
     ],
   controllers: [AppController],
   providers: [AppService],

@@ -71,6 +71,15 @@ export class UsersCheckinService {
         .exec();
     }
 
+    async getActivityForUser(id: string) {
+    
+        return this.userCheckingModel.find({
+            'user.id': id
+        })
+        .sort({ _id: -1 })
+        .limit(5)
+    }
+
     getCurrentDateAndTime(): string[] {
         const now = new Date();
 

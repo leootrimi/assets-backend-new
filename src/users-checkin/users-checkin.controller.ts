@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { UsersCheckinService } from './users-checkin.service';
 import { UserCheckinInfoDto, UsersCheckinDto } from './dto/users.checkin.dto';
 
@@ -26,5 +26,10 @@ export class UsersCheckinController {
     @Post('/user')
     getCheckinsForUser(@Req() request: any) {
         return this.userCheckinService.getUserCheckin(request)
+    }
+
+    @Get(':id/activity')
+    getActivityForUser(@Param('id') id: string ) {
+        return this.userCheckinService.getActivityForUser(id);
     }
 }
