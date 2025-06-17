@@ -9,6 +9,9 @@ import { AuthModule } from './auth/auth.module';
 import { CalendarModule } from './calendar/calendar.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { ProjectsModule } from './projects/projects.module';
+import { UsersCheckinModule } from './users-checkin/users-checkin.module';
+import { ApiRequest } from './utility/ApiRequest';
+import { HolidaysModule } from './holidays/holidays.module';
 
 @Module({
   imports: [
@@ -21,7 +24,9 @@ import { ProjectsModule } from './projects/projects.module';
     MongooseModule.forRoot(process.env.MONGO_URI!),
     AuthModule,
     CalendarModule,
-    ProjectsModule
+    ProjectsModule,
+    UsersCheckinModule,
+    HolidaysModule
     ],
   controllers: [AppController],
   providers: [AppService],

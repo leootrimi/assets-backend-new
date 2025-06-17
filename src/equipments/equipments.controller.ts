@@ -20,6 +20,11 @@ export class EquipmentsController {
         return this.equipmentService.findAll()
     }
 
+    @Get('/employer')
+    getEquipmentsForEmployer(@Req() request: any) {
+        return this.equipmentService.getEquipmentsForEmployer(request)
+    }
+
     @Get('/:id')
     findById(@Param('id') id: string) {
         const equipment = this.equipmentService.findById(id)

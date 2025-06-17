@@ -7,7 +7,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-    @UseGuards(AuthGuard('jwt'))
+    // @UseGuards(AuthGuard('jwt'))
     @Get()
     findAll() {
         return this.usersService.findAll()
