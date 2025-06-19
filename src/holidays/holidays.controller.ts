@@ -17,4 +17,14 @@ export class HolidaysController {
     getHolidaysForUser(@Req() request: any) {
         return this.holidaysService.getHolidayForUser(request);
     }
+
+    @Post('/capacity')
+    createHolidayCapacityForUser(@Body() body: any) {
+        return this.holidaysService.createHolidayCapacityForUser(body)
+    }
+
+    @Get('/capacity')
+    getHolidayCapacityForUser(@Req() request: any) {
+        return this.holidaysService.getHolidayCapacityForUser(request)
+    }
 }

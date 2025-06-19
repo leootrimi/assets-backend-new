@@ -19,3 +19,19 @@ export class Holiday{
 }
 
 export const HolidaySchema = SchemaFactory.createForClass(Holiday)
+
+@Schema()
+export class HolidayCapacity{
+    @Prop()
+    employer_id: string
+    @Prop()
+    fullName: string
+    @Prop({ default: 15 })
+    workFromHomeDays: number
+    @Prop({ default: 25 })
+    daysOff: number
+    @Prop({default: 14 })
+    medicalLeaveDays: number
+}
+
+export const HolidayCapacitySchema = SchemaFactory.createForClass(HolidayCapacity)
