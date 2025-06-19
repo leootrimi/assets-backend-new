@@ -1,5 +1,10 @@
 import { AssignedTo } from "../schema/equipments.schema";
 
+export class Company {
+    id: string;
+    companyName: string;
+}
+
 export class EquipmentsDto {
     name: string;
     type: string;
@@ -8,4 +13,5 @@ export class EquipmentsDto {
     price: number;
     assignedTo: AssignedTo;
     assignedDate: string;
+    company: Company;
 }

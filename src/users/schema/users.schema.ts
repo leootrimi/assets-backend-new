@@ -31,6 +31,12 @@ export class Users {
 
     @Prop()
     zipCode: string
+
+    @Prop()
+    company: string
+
+    @Prop()
+    company_id: string
 }
 
 export const UsersSchema = SchemaFactory.createForClass(Users)

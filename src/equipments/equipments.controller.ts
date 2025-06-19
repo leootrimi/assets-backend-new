@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Param, NotFoundException, Put, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Param, NotFoundException, Put, Req, Query } from '@nestjs/common';
 import { EquipmentsService } from './equipments.service';
 import { EquipmentsDto } from './dto/equipments.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -14,10 +14,12 @@ export class EquipmentsController {
         return this.equipmentService.create(equipment, req.user);
     }
 
-    @UseGuards(AuthGuard('jwt'))
+    // @UseGuards(AuthGuard('jwt'))
     @Get()
-    findAll() {
-        return this.equipmentService.findAll()
+    findAll(@Query('companyId') companyId: string) {
+        console.log('company param:', companyId);
+
+        return this.equipmentService.findAll(companyId)
     }
 
     @Get('/employer')

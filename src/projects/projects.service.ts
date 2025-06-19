@@ -15,8 +15,7 @@ export class ProjectsService {
     ) {}
 
     async create(project: ProjectsDto) {
-        // return await this.projectsModel.create(project);
-        return await this.auth0Utility.createOgranization(project)
+        return await this.projectsModel.create(project);
     }
 
     async find(): Promise<Projects[]> {

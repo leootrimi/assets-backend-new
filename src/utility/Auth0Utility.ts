@@ -31,6 +31,8 @@ export class Auth0Utility {
                 city: user_metadata.city,
                 state: user_metadata.state,
                 zipCode: user_metadata.zipCode,
+                company: user_metadata.company,
+                company_id: user_metadata.company_id
             }
             };
 
@@ -48,15 +50,13 @@ export class Auth0Utility {
                 Authorization: `Bearer ${accessToken}`,
             }
             );
-
-            console.log('Users response:', response);
             return response;
         } catch (error) {
             console.log(error.message);
         }
     }
 
-    async fetchAuth0Users() {
+    async fetchAuth0Users(company_id: string) {
         try {
             const tokens = await this.getAccessTokenForUsers()
             const accessToken = tokens.access_token;
@@ -69,6 +69,10 @@ export class Auth0Utility {
             undefined, 
             {
                 Authorization: `Bearer ${accessToken}`,
+            },
+            {
+                q: `user_metadata.company_id:"${company_id}"`,
+                search_engine: 'v3'
             }
             );
 

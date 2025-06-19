@@ -9,7 +9,16 @@ export class AssignedTo {
   fullName: string;
 }
 
-@Schema()
+@Schema({ _id: false }) 
+export class Company {
+  @Prop()
+  id: string;
+
+  @Prop()
+  companyName: string;
+}
+
+@Schema({ _id: false })
 export class Activity {
     @Prop({ required: true })
     user: string;
@@ -46,6 +55,9 @@ export class Equipments {
 
     @Prop({ type: [Activity], default: [] })
     activity: Activity[];
+
+    @Prop({ type: Company })
+    company: Company;
 }
 
 export const EquipmentsSchema = SchemaFactory.createForClass(Equipments);

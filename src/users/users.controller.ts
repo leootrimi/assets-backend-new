@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Delete, Put, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Delete, Put, Param, Req, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -9,8 +9,8 @@ export class UsersController {
 
     // @UseGuards(AuthGuard('jwt'))
     @Get()
-    findAll() {
-        return this.usersService.findAll()
+    findAll(@Query('companyId') companyId: string) {
+        return this.usersService.findAll(companyId)
     }
 
     @Post()

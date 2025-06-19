@@ -26,8 +26,13 @@ export class EquipmentsService {
         return newEquipment
     }
 
-    async findAll(): Promise<Equipments[]> {
-        return await this.equipmentsModel.find();
+    async findAll(company: any): Promise<Equipments[]> {
+            const response = await this.equipmentsModel.find({
+                'company.id': company
+            });
+
+        console.log('response', response);
+        return response
     }
 
     async findById(id: string): Promise<Equipments | null> {

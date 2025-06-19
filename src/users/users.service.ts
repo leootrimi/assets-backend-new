@@ -13,8 +13,9 @@ export class UsersService {
         private readonly auth0Utility: Auth0Utility
     ) {}
 
-    async findAll(): Promise<any> {
-        const users: any = await this.auth0Utility.fetchAuth0Users();
+    async findAll(companyId: string): Promise<any> {
+
+        const users: any = await this.auth0Utility.fetchAuth0Users(companyId);
         const userMetadataList = users
         .filter(user => user.user_metadata) 
         .map(user => ({
