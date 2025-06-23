@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Holiday, HolidayCapacity } from './schema/holidays.schema';
 import { Model } from 'mongoose';
 import { HolidayDto } from './dto/holidays.dto';
+import { OnEvent } from '@nestjs/event-emitter';
 
 @Injectable()
 export class HolidaysService {
@@ -43,6 +44,14 @@ export class HolidaysService {
         }
         return this.holidayCapacityModel.findOne({
             'employer_id': employer_id
+        })
+    }
+
+    @OnEvent('user_created')
+    async handleCreateUserEvent(user: any) {
+        return this.holidayCapacityModel.create({
+            'employer_id': user.user_id,
+            'fullName': user.name
         })
     }
 }

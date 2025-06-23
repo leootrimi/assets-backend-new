@@ -12,17 +12,22 @@ import { ProjectsModule } from './projects/projects.module';
 import { UsersCheckinModule } from './users-checkin/users-checkin.module';
 import { ApiRequest } from './utility/ApiRequest';
 import { HolidaysModule } from './holidays/holidays.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
-    UsersModule,
-    EquipmentsModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true
     }),
     MongooseModule.forRoot(process.env.MONGO_URI!),
+    CacheModule.register({
+      ttl: 50000,
+      isGlobal: true
+    }),
     AuthModule,
+    UsersModule,
+    EquipmentsModule,
     CalendarModule,
     ProjectsModule,
     UsersCheckinModule,

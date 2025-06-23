@@ -2,9 +2,10 @@ import { Module } from "@nestjs/common";
 import { HttpModule } from "@nestjs/axios";
 import { ApiRequest } from "src/utility/ApiRequest";
 import { Auth0Utility } from "src/utility/Auth0Utility";
+import { EventEmitterModule } from "@nestjs/event-emitter";
 
 @Module({
-  imports: [HttpModule],
+  imports: [HttpModule, EventEmitterModule.forRoot()],
   providers: [ApiRequest, Auth0Utility],
   exports: [ApiRequest, Auth0Utility],
 })

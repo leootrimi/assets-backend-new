@@ -1,13 +1,17 @@
-import { Controller, Get, Post, Body, UseGuards, Delete, Put, Param, Req, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Delete, Put, Param, Req, Query, UseInterceptors } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
+@UseInterceptors(CacheInterceptor)
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-    // @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'))
+    @CacheKey("users-all")
+    @CacheTTL(100000)
     @Get()
     findAll(@Query('companyId') companyId: string) {
         return this.usersService.findAll(companyId)

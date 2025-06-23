@@ -30,7 +30,6 @@ export class UsersService {
 
 
     async create(createUserDto: CreateUserDto) {
-        // return await this.usersModel.create(createUserDto);
         return this.auth0Utility.createAuth0User(createUserDto)
     }
 
