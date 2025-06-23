@@ -4,6 +4,7 @@ import { Holiday, HolidayCapacity } from './schema/holidays.schema';
 import { Model } from 'mongoose';
 import { HolidayDto } from './dto/holidays.dto';
 import { OnEvent } from '@nestjs/event-emitter';
+import { Request } from 'express';
 
 @Injectable()
 export class HolidaysService {
@@ -15,10 +16,12 @@ export class HolidaysService {
     ) {}
 
     async create(request: any, holiday: HolidayDto) {
-        console.log('user', request.user);
         
         return await this.holidayModel.create({
             'employer_id': request.user.sub,
+            'employer_name': request.user.name,
+            'company_id' : holiday.company_id,
+            "company_name": holiday.company_name,
             'fromDate': holiday.fromDate,
             'toDate': holiday.toDate,
             'status': 'pending',
@@ -30,6 +33,15 @@ export class HolidaysService {
         return this.holidayModel.find({
             employer_id: request.user.sub,
             fromDate: { $gt: new Date()}
+        })
+    }
+
+    async getUpcomingHolidaysRequest(company_id:string, request: Request) {
+        
+        return this.holidayModel.find({
+            status: "pending",
+            fromDate: { $gt: new Date()},
+            company_id: company_id
         })
     }
 

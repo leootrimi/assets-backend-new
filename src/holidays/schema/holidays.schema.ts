@@ -6,6 +6,12 @@ import { getCurrentDate } from "src/utility/Date/date.util";
 export class Holiday{
     @Prop()
     employer_id: string
+    @Prop()
+    employer_name: string
+    @Prop()
+    company_id: string
+    @Prop()
+    company_name: string
     @Prop({ type: Date, default: getCurrentDate() })
     appliedDate: Date
     @Prop({ type: Date })

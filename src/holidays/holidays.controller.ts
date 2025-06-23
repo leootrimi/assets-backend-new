@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
 import { HolidaysService } from './holidays.service';
 import { HolidayDto } from './dto/holidays.dto';
 
@@ -26,5 +26,10 @@ export class HolidaysController {
     @Get('/capacity')
     getHolidayCapacityForUser(@Req() request: any) {
         return this.holidaysService.getHolidayCapacityForUser(request)
+    }
+
+    @Get('/upcoming/requests')
+    getUpcomingHolidaysRequest(@Query('companyId') company_id: string, @Req() request: any) {
+        return this.holidaysService.getUpcomingHolidaysRequest(company_id, request)
     }
 }
