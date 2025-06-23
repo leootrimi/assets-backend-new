@@ -32,4 +32,14 @@ export class HolidaysController {
     getUpcomingHolidaysRequest(@Query('companyId') company_id: string, @Req() request: any) {
         return this.holidaysService.getUpcomingHolidaysRequest(company_id, request)
     }
+
+    @Get('accept')
+    acceptHolidayRequest(@Query('requestId') request_id: string) {
+        return this.holidaysService.acceptHolidayRequest(request_id)
+    }
+
+    @Get('reject')
+    rejectHolidayRequest(@Query('requestId') request_id: string) {
+        return this.holidaysService.rejectHolidayRequest(request_id)
+    }
 }

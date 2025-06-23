@@ -59,6 +59,22 @@ export class HolidaysService {
         })
     }
 
+    async acceptHolidayRequest(request_id: string) {
+        return this.holidayModel.findByIdAndUpdate(
+            request_id,
+            { status: 'approved'},
+            { new: true}
+        )
+    }
+
+    async rejectHolidayRequest(request_id: string) {
+        return this.holidayModel.findByIdAndUpdate(
+            request_id,
+            { status: 'rejected'},
+            { new: true}
+        )
+    }
+
     @OnEvent('user_created')
     async handleCreateUserEvent(user: any) {
         return this.holidayCapacityModel.create({
