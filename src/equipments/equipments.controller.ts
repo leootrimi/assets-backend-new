@@ -16,10 +16,8 @@ export class EquipmentsController {
 
     // @UseGuards(AuthGuard('jwt'))
     @Get()
-    findAll(@Query('companyId') companyId: string) {
-        console.log('company param:', companyId);
-
-        return this.equipmentService.findAll(companyId)
+    findAll() {
+        return this.equipmentService.findAll()
     }
 
     @Get('/employer')

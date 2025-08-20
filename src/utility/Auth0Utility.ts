@@ -61,7 +61,7 @@ export class Auth0Utility {
         }
     }
 
-    async fetchAuth0Users(company_id: string) {
+    async fetchAuth0Users() {
         try {
             const tokens = await this.getAccessTokenForUsers()
             const accessToken = tokens.access_token;
@@ -74,10 +74,6 @@ export class Auth0Utility {
             undefined, 
             {
                 Authorization: `Bearer ${accessToken}`,
-            },
-            {
-                q: `user_metadata.company_id:"${company_id}"`,
-                search_engine: 'v3'
             }
             );
 

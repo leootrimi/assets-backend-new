@@ -13,8 +13,8 @@ export class UsersController {
     @CacheKey("users-all")
     @CacheTTL(100000)
     @Get()
-    findAll(@Query('companyId') companyId: string) {
-        return this.usersService.findAll(companyId)
+    findAll() {
+        return this.usersService.findAll()
     }
 
     @Post()
