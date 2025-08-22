@@ -17,11 +17,10 @@ export class HolidaysService {
 
     async create(request: any, holiday: HolidayDto) {
         
+        console.log('holiday', holiday)
         return await this.holidayModel.create({
             'employer_id': request.user.sub,
             'employer_name': request.user.name,
-            'company_id' : holiday.company_id,
-            "company_name": holiday.company_name,
             'fromDate': holiday.fromDate,
             'toDate': holiday.toDate,
             'status': 'pending',
@@ -31,8 +30,7 @@ export class HolidaysService {
 
     async getHolidayForUser(request: any) {
         return this.holidayModel.find({
-            employer_id: request.user.sub,
-            fromDate: { $gt: new Date()}
+            employer_id: request.user.sub
         })
     }
 

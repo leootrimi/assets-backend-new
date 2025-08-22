@@ -8,10 +8,6 @@ export class Holiday{
     employer_id: string
     @Prop()
     employer_name: string
-    @Prop()
-    company_id: string
-    @Prop()
-    company_name: string
     @Prop({ type: Date, default: getCurrentDate() })
     appliedDate: Date
     @Prop({ type: Date })
