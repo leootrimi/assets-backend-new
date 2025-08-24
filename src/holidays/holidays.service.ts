@@ -28,6 +28,10 @@ export class HolidaysService {
         })
     }
 
+    async getAllHolidayRequests() {
+        return this.holidayModel.find()
+    }
+
     async getHolidayForUser(request: any) {
         return this.holidayModel.find({
             employer_id: request.user.sub

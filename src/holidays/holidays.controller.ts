@@ -13,6 +13,11 @@ export class HolidaysController {
         return this.holidaysService.create(request, holiday);
     }
 
+    @Get('/all')
+    getAllHolidayRequests() {
+        return this.holidaysService.getAllHolidayRequests();
+    }
+
     @Get()
     getHolidaysForUser(@Req() request: any) {
         return this.holidaysService.getHolidayForUser(request);
