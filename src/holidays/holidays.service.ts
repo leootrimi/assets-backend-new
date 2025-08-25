@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Holiday, HolidayCapacity } from './schema/holidays.schema';
 import { Model } from 'mongoose';
 import { HolidayDto } from './dto/holidays.dto';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Request } from 'express';
+import { getDaysBetween } from 'src/utility/Date/date.util';
 
 @Injectable()
 export class HolidaysService {
@@ -61,13 +62,60 @@ export class HolidaysService {
         })
     }
 
-    async acceptHolidayRequest(request_id: string) {
-        return this.holidayModel.findByIdAndUpdate(
-            request_id,
-            { status: 'approved'},
-            { new: true}
-        )
+
+async acceptHolidayRequest(request_id: string, employer_id: string) {
+  try {
+    const request = await this.holidayModel.findByIdAndUpdate(
+      request_id,
+      { status: "approved" },
+      { new: true }
+    );
+
+    if (!request) {
+      throw new Error("Holiday request not found");
     }
+
+    if (!request.fromDate || !request.toDate) {
+      throw new Error("Request is missing fromDate or toDate");
+    }
+    // 2. Calculate how many days off
+    const from = new Date(request.fromDate as unknown as Date | string);
+    const to = new Date(request.toDate as unknown as Date | string);
+
+    const daysRequested = getDaysBetween(from, to)
+    // +1 because 21 → 24 Aug = 4 days, not 3
+
+    console.log("requestedDays", daysRequested);
+    
+    let updateField: any = {};
+
+    switch (request.type) {
+      case "sick":
+        updateField = { $inc: { medicalLeaveDays: -daysRequested } };
+        break;
+      case "vacation":
+        updateField = { $inc: { daysOff: -daysRequested } };
+        break;
+      case "wfh":
+        updateField = { $inc: { workFromHomeDays: -daysRequested } };
+        break;
+      default:
+        throw new Error(`Unknown holiday type: ${request.type}`);
+    }
+
+    const updatedCapacity = await this.holidayCapacityModel.findOneAndUpdate(
+      { employer_id },
+      updateField,
+      { new: true }
+    );
+
+    return { request, updatedCapacity, daysRequested };
+  } catch (err) {
+    console.error("Error accepting holiday request:", err);
+    throw err;
+  }
+}
+
 
     async rejectHolidayRequest(request_id: string) {
         return this.holidayModel.findByIdAndUpdate(
