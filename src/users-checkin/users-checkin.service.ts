@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserCheckin } from './schema/users.checkin.schema';
 import { Model } from 'mongoose';
-import { UserCheckinInfoDto, UsersCheckinDto } from './dto/users.checkin.dto';
-import { log } from 'console';
 
 @Injectable()
 export class UsersCheckinService {

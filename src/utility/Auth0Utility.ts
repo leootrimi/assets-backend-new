@@ -1,11 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { ApiRequest } from "./ApiRequest";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
+import { EventEmitter2 } from '@nestjs/event-emitter';
+
 
 @Injectable()
 export class Auth0Utility {
     constructor(
-        private readonly apiRequest: ApiRequest
+        private readonly apiRequest: ApiRequest,
+        private eventEmitter: EventEmitter2
     ) {}
 
     async createAuth0User(user_metadata: CreateUserDto) {
@@ -31,6 +34,8 @@ export class Auth0Utility {
                 city: user_metadata.city,
                 state: user_metadata.state,
                 zipCode: user_metadata.zipCode,
+                company: user_metadata.company,
+                company_id: user_metadata.company_id
             }
             };
 
@@ -49,7 +54,7 @@ export class Auth0Utility {
             }
             );
 
-            console.log('Users response:', response);
+            this.eventEmitter.emit('user_created', response)
             return response;
         } catch (error) {
             console.log(error.message);

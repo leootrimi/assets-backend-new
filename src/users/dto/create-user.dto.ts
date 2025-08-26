@@ -8,5 +8,7 @@ export class CreateUserDto {
     city: string;
     state: string;
     zipCode: string;
+    company: string;
+    company_id: string;
   }
   

@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { UsersCheckinService } from './users-checkin.service';
-import { UserCheckinInfoDto, UsersCheckinDto } from './dto/users.checkin.dto';
 
 @Controller('users-checkin')
 export class UsersCheckinController {

@@ -6,6 +6,8 @@ import { getCurrentDate } from "src/utility/Date/date.util";
 export class Holiday{
     @Prop()
     employer_id: string
+    @Prop()
+    employer_name: string
     @Prop({ type: Date, default: getCurrentDate() })
     appliedDate: Date
     @Prop({ type: Date })
@@ -19,3 +21,39 @@ export class Holiday{
 }
 
 export const HolidaySchema = SchemaFactory.createForClass(Holiday)
+
+@Schema()
+export class HolidayCapacity{
+    @Prop()
+    employer_id: string
+    @Prop()
+    fullName: string
+    @Prop({ default: 15 })
+    workFromHomeDays: number
+    @Prop({ default: 25 })
+    daysOff: number
+    @Prop({default: 14 })
+    medicalLeaveDays: number
+    @Prop({default: 10 })
+    paternityLeave: number
+    @Prop({default: 10 })
+    maternityLeave: number
+}
+
+export const HolidayCapacitySchema = SchemaFactory.createForClass(HolidayCapacity)
+
+@Schema()
+export class HolidayCapacityDefault{
+    @Prop({ default: 15 })
+    workFromHomeDays: number
+    @Prop({ default: 25 })
+    daysOff: number
+    @Prop({default: 14 })
+    medicalLeaveDays: number
+    @Prop({default: 10 })
+    paternityLeave: number
+    @Prop({default: 10 })
+    maternityLeave: number
+}
+
+export const HolidayCapacityDefaultSchema = SchemaFactory.createForClass(HolidayCapacityDefault)
