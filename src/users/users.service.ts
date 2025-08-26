@@ -1,16 +1,19 @@
-import { Body, Injectable, Post } from '@nestjs/common';
+import { Body, Injectable, Post, Req } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Users } from './schema/users.schema';
 import mongoose from 'mongoose';
 import { Auth0Utility } from 'src/utility/Auth0Utility';
+import { AWSServices } from 'src/utility/aws/aws.services';
+import { log } from 'node:console';
 
 @Injectable()
 export class UsersService {
     constructor(
         @InjectModel(Users.name)
         private usersModel: mongoose.Model<Users>,
-        private readonly auth0Utility: Auth0Utility
+        private readonly auth0Utility: Auth0Utility,
+        private readonly awsServicer: AWSServices
     ) {}
 
     async findAll(): Promise<any> {
@@ -36,4 +39,12 @@ export class UsersService {
         // return await this.usersModel.findById(id)
         return await this.auth0Utility.fetchUserById(id);
     }
+
+    async uploadFileForUser(request: any, fileName: string, fileBuffer: Buffer) {
+        return this.awsServicer.uploadFiles(request, fileName, fileBuffer)
+    }
+    
+     async listUserFiles(@Req() request: any) {
+        return this.awsServicer.listUserFiles(request)
+     }
 }
