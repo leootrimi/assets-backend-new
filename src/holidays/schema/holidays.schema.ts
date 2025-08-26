@@ -34,6 +34,26 @@ export class HolidayCapacity{
     daysOff: number
     @Prop({default: 14 })
     medicalLeaveDays: number
+    @Prop({default: 10 })
+    paternityLeave: number
+    @Prop({default: 10 })
+    maternityLeave: number
 }
 
 export const HolidayCapacitySchema = SchemaFactory.createForClass(HolidayCapacity)
+
+@Schema()
+export class HolidayCapacityDefault{
+    @Prop({ default: 15 })
+    workFromHomeDays: number
+    @Prop({ default: 25 })
+    daysOff: number
+    @Prop({default: 14 })
+    medicalLeaveDays: number
+    @Prop({default: 10 })
+    paternityLeave: number
+    @Prop({default: 10 })
+    maternityLeave: number
+}
+
+export const HolidayCapacityDefaultSchema = SchemaFactory.createForClass(HolidayCapacityDefault)

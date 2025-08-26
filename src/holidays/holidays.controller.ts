@@ -23,6 +23,11 @@ export class HolidaysController {
         return this.holidaysService.getHolidayForUser(request);
     }
 
+    @Get('/default')
+    getCompanyDefaultHolidaysValue() {
+        return this.holidaysService.getCompanyDefaultHolidaysValue()
+    }
+
     @Post('/capacity')
     createHolidayCapacityForUser(@Body() body: any) {
         return this.holidaysService.createHolidayCapacityForUser(body)

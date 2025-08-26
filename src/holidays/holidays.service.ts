@@ -1,6 +1,6 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Holiday, HolidayCapacity } from './schema/holidays.schema';
+import { Holiday, HolidayCapacity, HolidayCapacityDefault } from './schema/holidays.schema';
 import { Model } from 'mongoose';
 import { HolidayDto } from './dto/holidays.dto';
 import { OnEvent } from '@nestjs/event-emitter';
@@ -8,13 +8,22 @@ import { Request } from 'express';
 import { getDaysBetween } from 'src/utility/Date/date.util';
 
 @Injectable()
-export class HolidaysService {
+export class HolidaysService implements OnModuleInit {
     constructor(
         @InjectModel(Holiday.name)
         private holidayModel: Model<Holiday>,
         @InjectModel(HolidayCapacity.name)
-        private holidayCapacityModel: Model<HolidayCapacity>
+        private holidayCapacityModel: Model<HolidayCapacity>,
+        @InjectModel(HolidayCapacityDefault.name)
+        private holidayCapacityDefaultModel: Model<HolidayCapacityDefault>
     ) {}
+
+    async onModuleInit() {
+       const count = await this.holidayCapacityDefaultModel.countDocuments();
+       if (count == 0) {
+        await this.holidayCapacityDefaultModel.create({});
+       }
+    }
 
     async create(request: any, holiday: HolidayDto) {
         
@@ -116,13 +125,16 @@ async acceptHolidayRequest(request_id: string, employer_id: string) {
   }
 }
 
-
     async rejectHolidayRequest(request_id: string) {
         return this.holidayModel.findByIdAndUpdate(
             request_id,
             { status: 'rejected'},
             { new: true}
         )
+    }
+
+    async getCompanyDefaultHolidaysValue() {
+      return this.holidayCapacityDefaultModel.find()
     }
 
     @OnEvent('user_created')
